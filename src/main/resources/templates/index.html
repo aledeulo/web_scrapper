@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Browser</title>
+
+    <link href="../static/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet" media="screen"/>
+    <script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body>
+
+<div class="container" style="text-align:center">
+    <div th:replace="@{fragments/navbar}"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" th:object="${page}" id="scraper_form">
+                <input type="text" class="form-control" th:field="*{url}" placeholder="Insert full URL here!">
+                <div style="display:inline-flex; vertical-align:middle; padding:1em" class="form-group">
+                    <input type="submit" class="btn btn-success" value="Index" name="index" formmethod="post"
+                           formaction="/browser/page">
+                    <input type="submit" class="btn btn-danger" value="Clear" name="clear" formmethod="post"
+                           formaction="/browser/clear">
+                </div>
+            </form>
+            <span>Indexed <strong th:text="${indexed}"></strong> new pages and <strong
+                    th:text="${count_words}"></strong> words</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

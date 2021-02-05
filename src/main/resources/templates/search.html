@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Browser</title>
+
+    <link href="../static/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet" media="screen"/>
+    <script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body>
+
+<div class="container" style="text-align:center">
+    <div th:replace="@{fragments/navbar}"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="row g-2 form-vertical" style="text-align:center" th:object="${search}" method="get"
+                  th:action="@{/search/word}">
+                <div class="col-md-8" style="margin-right:1em">
+                    <input type="text" class="form-control" name="search">
+                </div>
+                <div class="col-auto" style="margin-left:1em">
+                    <input type="submit" class="btn btn-success" value="Search" name="Search">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top: 2em; text-align: left">
+        <div class="col-md-12" th:if="${not #maps.isEmpty(links)}">
+            <h4>Found <strong th:text="${#maps.size(links)}"></strong> results</h4>
+            <ul th:each="entry : ${links}" style="list-style: none">
+                <li>
+                    <a th:href="${entry.key.url}"><p th:text="${entry.key.title}"></p></a>
+                    <span>Occurrences: <strong th:text="${entry.value}"></strong></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
