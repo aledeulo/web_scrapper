@@ -3,7 +3,8 @@ package com.springboot.browser.model;
 import javax.persistence.*;
 import java.util.*;
 
-@Entity
+@Entity(name = "page")
+@Table(name = "page")
 public class Page {
     @Id
     private String url;
