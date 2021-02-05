@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -54,12 +55,9 @@ public class SearchController extends Tools<Page, Long> {
 
     @Override
     public Map<Page, Long> sortByValue(Map<Page, Long> map) {
-        List<Map.Entry<Page, Long>> list = new LinkedList<>(map.entrySet());
-        list.sort(Map.Entry.comparingByValue());
-        Map<Page, Long> sortedMap = new HashMap<>();
-        for (Map.Entry<Page, Long> entry : list) {
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }
-        return sortedMap;
+        return map.entrySet()
+                .stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (v1, v2) -> v2, LinkedHashMap::new));
     }
 }
