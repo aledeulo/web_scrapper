@@ -7,15 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Controller
 public class PageController {
@@ -36,13 +33,14 @@ public class PageController {
     @RequestMapping(value = "browser/clear", method = RequestMethod.POST)
     public String deleteIndexes(Model model) {
         pageService.DeleteAllIndexes();
-        model.addAttribute("index", "All index has been clear");
+        model.addAttribute("erased", "All index has been cleared");
+        model.addAttribute("page", new Page());
         return "index";
     }
 
     @RequestMapping(value = "browser/page", method = RequestMethod.POST)
     public String scrapePage(@ModelAttribute("page") Page page, Model model) {
-        List<Page> pages = WebScraper.scrapedPages(page);
+        List<Page> pages = WebScraper.scrappedPages(page, new ArrayList<>());
         final AtomicLong inc = new AtomicLong(0);
         if (!pages.isEmpty()) {
             for (Page p : pages) {

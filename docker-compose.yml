@@ -14,7 +14,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://psql-browser-container:5432/browser
       - SPRING_DATASOURCE_USERNAME=browser
       - SPRING_DATASOURCE_PASSWORD=browser@123
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
 
   db:
     image: 'postgres:9.6-alpine'
